@@ -130,33 +130,84 @@
             border-color: #3498db;
         }
 
-        /* animation */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* checkbox style */
+        .gate-checkbox input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .gate-checkbox input[type="checkbox"]:checked {
+            background-color: #3498db;
+            border-radius: 4px;
+        }
+        
+        /* checkbox label style with diffierent color when checked */
+        .gate-blue input[type="checkbox"]:checked + label {
+            color: #3498db;
+        }
+        .gate-white input[type="checkbox"]:checked + label {
+            color: #D4D299;
+        }
+        .gate-violet input[type="checkbox"]:checked + label {
+            color: #9b59b6;
+        }
+        .gate-black input[type="checkbox"]:checked + label {
+            color: #2c3e50;
+        }
+        .gate-yellow input[type="checkbox"]:checked + label {
+            color: #f1c40f;
+        }
+        .gate-red input[type="checkbox"]:checked + label {
+            color: #e74c3c;
+        }
+
+        
+        /* popup animation */
+        @keyframes popup {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.05); }
+            75% { transform: scale(0.95); }
+            100% { transform: scale(1); }
         }
         #kaleidHelper {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: popup 0.3s ease-out;
         }
         #kaleidHelper h2 {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: popup 0.3s ease-out;
         }
         .gate-section h3 {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: popup 0.3s ease-out;
         }
         .gate-checkbox {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: popup 0.3s ease-out;
         }
         .save-button {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: popup 0.3s ease-out;
+        }
+        
+
+        /* tooltip animation */
+        @keyframes tooltip {
+            0% { opacity: 0; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
         }
         .tooltip {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: tooltip 0.3s ease-out;
         }
         .tooltip::after {
-            animation: fadeIn 0.5s ease-in-out;
+            animation: tooltip 0.3s ease-out;
         }
-        /* End of animation */
+        /* hover tip */
+        #hover-tip {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+            text-align: center;
+        }
+
+
         
     `;
     document.head.appendChild(style);
@@ -175,7 +226,8 @@
             'black': 'Black',
             'yellow': 'Yellow',
             'red': 'Red',
-            'saveAlert': 'Gate selection saved!'
+            'saveAlert': 'Gate selection saved!',
+            'hover': 'Hover over the gate name for tips'
         },
         'zh-tw': {
             'title': 'KALEIDXSCOPE 助手',
@@ -189,7 +241,8 @@
             'black': '大都會區域',
             'yellow': '起始區域',
             'red': '龍區域',
-            'saveAlert': '選擇已儲存！'
+            'saveAlert': '選擇已儲存！',
+            'hover': '將鼠標懸停在門名稱上以獲取提示'
         },
         'ja': {
             'title': 'KALEIDXSCOPE ゲートヘルパー',
@@ -203,7 +256,8 @@
             'black': '黒',
             'yellow': '黄',
             'red': '赤',
-            'saveAlert': 'ゲートの選択を保存しました！'
+            'saveAlert': 'ゲートの選択を保存しました！',
+            'hover': 'ゲート名にカーソルを合わせてヒントを表示'
         }
     };
 
@@ -245,7 +299,7 @@
             'zh-tw': {
                 blue: '自挑戰發布以來，至少播放一次青春區域的所有29首歌曲（截至スカイストリートちほー6）',
                 white: '裝備「Latent Kingdom」底板，然後在一次遊戲中，僅播放以下歌曲（歌曲在一次遊戲中不得重複）',
-                violet: `將任何 アウル（貓頭鷹）變體設置為隊長（如果尚未解鎖，可在 maimile 商店購買），然後在一次遊戲中，僅播放言ノ葉計畫任一季的歌曲（歌曲在一次遊戲中不得重複）。\n`,
+                violet: `將任何 アウル 變體設置為隊長（如果尚未解鎖，可在 maimile 商店購買），然後在一次遊戲中，僅播放言ノ葉計畫任一季的歌曲（歌曲在一次遊戲中不得重複）。\n`,
                 black: '自挑戰發布以來，至少播放一次過去所有 KING of Performai 比賽（不包括國際組歌曲）',
                 yellow: '當隨機歌曲選擇功能選擇時，播放以下版本主題歌曲之一',
                 red: '自課程發布以來，至少播放以下10首歌曲'
@@ -275,6 +329,9 @@
             const color = ['blue', 'white', 'violet', 'black', 'yellow', 'red'][index];
             tooltip.textContent = getTip(color);
         });
+        // Update the hover tip
+        document.getElementById('hover-tip').textContent = translated.hover;
+        
 
         ['blue', 'white', 'violet', 'black', 'yellow', 'red'].forEach(color => {
             const checkbox = document.getElementById(`gate-${color}`);
@@ -295,6 +352,7 @@
             <option value="zh-tw">繁體中文</option>
             <option value="ja">日本語</option>
         </select>
+        <p id="hover-tip" >${translations[currentLanguage].hover}</p>
         
         <div class="gate-section">
             <h3 id="select-gates-header">Select Active Gates</h3>
@@ -303,11 +361,16 @@
                     <input type="checkbox" id="gate-${color}" name="gate">
                     <label for="gate-${color}">Phase ${getPhase(color)}: ${capitalize(color)} Gate (${colorJP(color)})</label>
                     <span class="tooltip">${getTip(color)}</span>
+                    <!-- icon for each gate -->
+                    <img src="https://example.com/${color}.png" alt="${capitalize(color)} Gate Icon" style="width: 20px; height: 20px; margin-left: 5px;">
                 </div>
             `).join('')}
         </div>
         
         <button class="save-button" id="save-gates">Save Gate Selection</button>
+        <hr>
+        <!-- github info -->
+        <p style="text-align: center; font-size: 12px; color: #666;">Source code: <a href="https://github.com/XingYanTW/kALEIDXSCOPE-Helper/" target="_blank">GitHub</a></p>
     `;
     document.body.appendChild(helperDiv);
 
@@ -349,6 +412,16 @@
         alert(translations[currentLanguage].saveAlert);
 
         filterSongsByGates(activeGates);
+    });
+
+    // gate-checkbox able to click
+    document.querySelectorAll('.gate-checkbox').forEach(checkbox => {
+        checkbox.addEventListener('click', function (event) {
+            const input = this.querySelector('input[type="checkbox"]');
+            if (input) {
+                input.checked = !input.checked;
+            }
+        });
     });
 
     // Function to filter songs based on selected gates
