@@ -114,7 +114,21 @@
     console.debug('Creating helper UI window');
     const helperDiv = document.createElement('div');
     helperDiv.id = 'kaleidHelper';
-    helperDiv.innerHTML = `...`;  // Keeping HTML as is for brevity
+    helperDiv.innerHTML = `
+        <h2>KALEIDXSCOPE Gate Helper</h2>
+        
+        <div class="gate-section">
+            <h3>Select Active Gates</h3>
+            ${['blue', 'white', 'violet', 'black', 'yellow', 'red'].map(color => `
+                <div class="gate-checkbox gate-${color}">
+                    <input type="checkbox" id="gate-${color}" name="gate">
+                    <label for="gate-${color}">Phase ${getPhase(color)}: ${capitalize(color)} Gate (${colorJP(color)})</label>
+                </div>
+            `).join('')}
+        </div>
+        
+        <button class="save-button" id="save-gates">Save Gate Selection</button>
+    `;
     document.body.appendChild(helperDiv);
 
     // Load saved gate selections from localStorage
@@ -244,12 +258,16 @@
 
         // Phase 6 (Red Gate) song list
         const phase6Songs = [
-            '封焔の135秒',
-            'ほしぞらスペクタクル',
-            'U&iVERSE -銀河鸞翔-',
-            'ツムギボシ',
-            'ここからはじまるプロローグ。 (Kanon Remix)',
-            'Latent Kingdom'
+            'ドラゴンエネルギー',
+            'Garden Of The Dragon',
+            'DRAGONLADY',
+            '好きな惣菜発表ドラゴン',
+            'KONNANじゃないっ！',
+            'Brand-new Japanesque',
+            'Outlaw\'s Lullaby',
+            '鼓動',
+            '神室雪月花',
+            'ばかみたい【Taxi Driver Edition】'
         ];
 
         console.debug('Starting song filtering...');
@@ -282,7 +300,7 @@
                 console.debug(`Song "${songName}" matched and checked`);
             } else {
                 checkbox.checked = false;
-                console.debug(`Song "${songName}" not matched and unchecked`);
+                //console.debug(`Song "${songName}" not matched and unchecked`);
             }
         });
 
