@@ -5,7 +5,7 @@
 
 ---
 
-## 功能
+### 功能
 
 - 在頁面右上角顯示「KALEIDXSCOPE Gate Helper」面板  
 - 支援多語系（English、繁體中文、日本語）  
@@ -14,7 +14,7 @@
 
 ---
 
-## 安裝
+### 安裝
 
 1. 將本業面新增為書籤  
 2. 將書籤名稱取成想要的名稱
@@ -26,7 +26,7 @@ javascript:(function(){var s=document.createElement('script');s.src='https://cdn
 
 ---
 
-## 使用
+### 使用
 
 1. 打開 maimai DX 的「收藏歌曲」頁面  
 2. 右上方會自動跳出 Gate Helper 面板  
@@ -37,7 +37,7 @@ javascript:(function(){var s=document.createElement('script');s.src='https://cdn
 
 ---
 
-## 開發
+### 開發
 
 ```bash
 # Clone
@@ -50,6 +50,15 @@ cd KALEIDXSCOPE-Helper
 
 ---
 
-## 授權
+### 相關網站
+
+maimai　攻略wiki https://gamerch.com/maimai/871318
+
+SilentBlue https://silentblue.remywiki.com/maimai_DX:KALEIDXSCOPE
+
+---
+
+
+### 授權
 
 MIT License  

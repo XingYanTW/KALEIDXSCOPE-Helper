@@ -7,6 +7,8 @@
 - Select which Gates (Phases) you want to filter  
 - Click **Save** to automatically check all songs matching the selected gates  
 
+---
+
 ### Installation
 1. Add this project as a browser bookmark  
 2. Name the bookmark as you like  
@@ -16,6 +18,8 @@
    ```
 4. Open the **Favorite Songs** page on maimai DX and click your bookmark  
 
+---
+
 ### Usage
 1. Open maimai DX “Favorite Songs” page  
 2. The Gate Helper panel appears automatically  
@@ -23,6 +27,8 @@
 4. Check the Gates (Phases) you wish to filter  
 5. Click **Save Gate Selection**  
 6. The tool will check the matching songs in the list  
+
+---
 
 ### Development
 ```bash
@@ -32,6 +38,8 @@ cd KALEIDXSCOPE-Helper
 ```
 - Edit `main.js`  
 - Reload the script in your browser to see changes  
+
+---
 
 ### License
 MIT License
