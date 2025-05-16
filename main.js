@@ -1,21 +1,22 @@
 (function () {
     'use strict';
 
+    // 動態載入 style.js 與 translations.js
+    const load = src => new Promise(r => {
+        const s = document.createElement('script');
+        s.src = src;
+        s.onload = r;
+        document.head.appendChild(s);
+    });
+    Promise.all([
+        load('https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@master/style.js'),
+        load('https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@master/translations.js')
+    ]).then(initHelper);
+
     function initHelper() {
         let currentLang = localStorage.getItem('selectedLanguage') || 'en';
         const tr = window.KX_TRANSLATIONS;
         const getTip = window.KX_getTip;
-        const load = src => new Promise(r => {
-            const s = document.createElement('script');
-            s.src = src; s.onload = r; document.head.appendChild(s);
-        });
-        Promise.all([
-            load('https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@master/style.js'),
-            load('https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@master/translations.js')
-        ]).then(initHelper);
-
-        // Default language
-        let currentLanguage = 'en';
 
         // Helper functions
         function capitalize(str) {
