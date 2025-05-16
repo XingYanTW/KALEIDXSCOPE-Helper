@@ -223,7 +223,7 @@
             '有明/Ariake'
         ];
 
-        // Phase 4 (Black Gate) song list - corrected
+        // Phase 4 (Black Gate) song list
         const phase4Songs = [
             'アンビバレンス',
             '分解収束テイル',
@@ -258,7 +258,7 @@
             'Fraq'
         ];
 
-        // Phase 6 (Red Gate) song list - added
+        // Phase 6 (Red Gate) song list
         const phase6Songs = [
             '封焔の135秒',
             'ほしぞらスペクタクル',
@@ -269,25 +269,33 @@
         ];
 
         // Process each song checkbox
-        document.querySelectorAll('.favorite_checkbox').forEach(frame => {
-            const nameEl = frame.querySelector('.favorite_music_name');
-            const title = nameEl ? nameEl.textContent.trim() : '';
-            let showSong = false;
+        document.querySelectorAll('.favorite_checkbox').forEach(checkboxContainer => {
+            const songNameElement = checkboxContainer.querySelector('.favorite_music_name');
+            const songName = songNameElement ? songNameElement.textContent.trim() : '';
+            const checkbox = checkboxContainer.querySelector('input[type="checkbox"][id="favorite"]');
+            
+            if (!checkbox || !songName) return;
 
-            // Check each gate's song list
-            if (activeGates.blue && phase1Songs.includes(title)) showSong = true;
-            if (activeGates.white && phase2Songs.includes(title)) showSong = true;
-            if (activeGates.violet && phase3Songs.includes(title)) showSong = true;
-            if (activeGates.black && phase4Songs.includes(title)) showSong = true;
-            if (activeGates.yellow && phase5Songs.includes(title)) showSong = true;
-            if (activeGates.red && phase6Songs.includes(title)) showSong = true;
+            let shouldCheck = false;
 
-            // Toggle visibility and selection
-            frame.style.display = showSong ? '' : 'none';
-            if (showSong) {
-                const cb = frame.querySelector('input[type="checkbox"]');
-                if (cb) cb.checked = true;
-            }
+            // Check which gate's song list contains this song
+            if (activeGates.blue && phase1Songs.includes(songName)) shouldCheck = true;
+            if (activeGates.white && phase2Songs.includes(songName)) shouldCheck = true;
+            if (activeGates.violet && phase3Songs.includes(songName)) shouldCheck = true;
+            if (activeGates.black && phase4Songs.includes(songName)) shouldCheck = true;
+            if (activeGates.yellow && phase5Songs.includes(songName)) shouldCheck = true;
+            if (activeGates.red && phase6Songs.includes(songName)) shouldCheck = true;
+
+            // Update checkbox state
+            checkbox.checked = shouldCheck;
+            
+            // Show/hide the container based on selection
+            checkboxContainer.style.display = shouldCheck ? '' : 'none';
         });
+    }
+
+    // Initial filter if gates are already selected
+    if (Object.values(savedGates).some(gate => gate)) {
+        filterSongsByGates(savedGates);
     }
 })();
