@@ -1,7 +1,6 @@
 (function () {
     'use strict';
 
-    console.debug('KALEIDXSCOPE Gate Helper script loaded');
 
     // Add custom CSS
     const style = document.createElement('style');
@@ -109,6 +108,26 @@
             border-width: 5px;
             border-style: solid;
             border-color: transparent transparent #333 transparent;
+        }
+
+        /* Language select */
+        #language-select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        #language-select option {
+            padding: 5px;
+        }
+        #language-select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        #language-select:hover {
+            border-color: #3498db;
         }
 
         /* animation */
@@ -265,7 +284,6 @@
     }
 
     // Create the helper window
-    console.debug('Creating helper UI window');
     const helperDiv = document.createElement('div');
     helperDiv.id = 'kaleidHelper';
     helperDiv.innerHTML = `
@@ -294,19 +312,16 @@
     document.body.appendChild(helperDiv);
 
     // Load saved gate selections from localStorage
-    console.debug('Loading saved gate selections from localStorage');
     const savedGates = JSON.parse(localStorage.getItem('activeGates')) || {
         blue: false, white: false, violet: false,
         black: false, yellow: false, red: false
     };
-    console.debug('Loaded saved gates:', savedGates);
 
     // Set initial checkbox states
     Object.keys(savedGates).forEach(color => {
         const checkbox = document.getElementById(`gate-${color}`);
         if (checkbox) {
             checkbox.checked = savedGates[color];
-            console.debug(`Checkbox for ${color} set to ${savedGates[color]}`);
         }
     });
 
@@ -325,13 +340,11 @@
 
     // Save button functionality
     document.getElementById('save-gates').addEventListener('click', function () {
-        console.debug('Save button clicked');
         const activeGates = {};
         ['blue', 'white', 'violet', 'black', 'yellow', 'red'].forEach(color => {
             activeGates[color] = document.getElementById(`gate-${color}`).checked;
         });
 
-        console.debug('Active gates to save:', activeGates);
         localStorage.setItem('activeGates', JSON.stringify(activeGates));
         alert(translations[currentLanguage].saveAlert);
 
@@ -340,7 +353,6 @@
 
     // Function to filter songs based on selected gates
     function filterSongsByGates(activeGates) {
-        console.debug('Filtering songs for gates:', activeGates);
 
         // Phase 1 (Blue Gate) song list
         const phase1Songs = [
@@ -445,7 +457,6 @@
             'ばかみたい【Taxi Driver Edition】'
         ];
 
-        console.debug('Starting song filtering...');
         let foundCount = 0;
 
         document.querySelectorAll('.favorite_checkbox').forEach(container => {
@@ -472,21 +483,14 @@
             if (shouldcheck) {
                 checkbox.checked = true;
                 foundCount++;
-                console.debug(`Song "${songName}" matched and checked`);
             } else {
                 checkbox.checked = false;
-                //console.debug(`Song "${songName}" not matched and unchecked`);
             }
         });
-
-        console.debug(`Filtering complete. ${foundCount} songs checked.`);
     }
 
     // Initial filter if gates are already selected
     if (Object.values(savedGates).some(gate => gate)) {
-        console.debug('Active gates found on load, applying initial filter...');
         filterSongsByGates(savedGates);
-    } else {
-        console.debug('No active gates found on load');
     }
 })();
