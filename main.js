@@ -9,7 +9,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 280px;
+            width: 360px;
             background-color: #f0f5ff;
             border: 2px solid #4a4a4a;
             border-radius: 8px;
@@ -39,15 +39,36 @@
             padding-left: 5px;
         }
 
-        .gate-checkbox {
-            margin: 6px 0;
-            padding: 5px;
-            border-radius: 4px;
-            transition: background-color 0.2s;
+        /* 讓整個 checkbox 區塊左右配置，並讓 tooltip 正確定位 */
+    .gate-checkbox {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 6px 0;
+        padding: 5px;
+        border-radius: 4px;
+        transition: background-color 0.2s;
+    }
+
+    .gate-checkbox:hover {
+        background-color: #e0e8f0;
+    }
+
+        .gate-checkbox label {
+            flex: 1;
+            margin: 0;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
         }
 
-        .gate-checkbox:hover {
-            background-color: #e0e8f0;
+        /* 改用 class 取代 id，並靠右顯示 */
+        .gate-icon {
+            width: 50px;
+            height: 50px;
+            margin-left: 5px;
         }
 
         .gate-checkbox input {
@@ -55,12 +76,6 @@
             cursor: pointer;
         }
 
-        .gate-checkbox label {
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-        }
 
         .gate-blue { border-left: 3px solid #3498db; }
         .gate-white { border-left: 3px solid #D4D299; }
@@ -87,28 +102,34 @@
         }
 
         .tooltip {
-            position: absolute;
-            background-color: #333;
-            color: #fff;
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 12px;
-            display: none;
-            z-index: 10000;
-        }
-        .gate-checkbox:hover .tooltip {
-            display: block;
-        }
-        .gate-checkbox:hover .tooltip::after {
-            content: '';
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: transparent transparent #333 transparent;
-        }
+        position: absolute;
+        top: -5px;
+        left: -1%;
+        transform: translateY(-100%);
+        background-color: #333;
+        color: #fff;
+        padding: 5px;
+        border-radius: 4px;
+        font-size: 12px;
+        display: none;
+        z-index: 10000;
+        max-width: 400px;       /* 限制寬度 */
+        white-space: normal;    /* 自動換行 */
+        word-break: break-word; /* 單詞過長時斷行 */
+    }
+    .gate-checkbox:hover .tooltip {
+        display: block;
+    }
+    .gate-checkbox:hover .tooltip::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%) translateY(100%);
+        border-width: 5px;
+        border-style: solid;
+        border-color: #333 transparent transparent transparent;
+    }
 
         /* Language select */
         #language-select {
@@ -206,6 +227,8 @@
             margin-top: 5px;
             text-align: center;
         }
+        
+        
 
 
         
@@ -331,7 +354,7 @@
         });
         // Update the hover tip
         document.getElementById('hover-tip').textContent = translated.hover;
-        
+
 
         ['blue', 'white', 'violet', 'black', 'yellow', 'red'].forEach(color => {
             const checkbox = document.getElementById(`gate-${color}`);
@@ -359,10 +382,14 @@
             ${['blue', 'white', 'violet', 'black', 'yellow', 'red'].map(color => `
                 <div class="gate-checkbox gate-${color}">
                     <input type="checkbox" id="gate-${color}" name="gate">
-                    <label for="gate-${color}">Phase ${getPhase(color)}: ${capitalize(color)} Gate (${colorJP(color)})</label>
+                    <label for="gate-${color}">
+                        Phase ${getPhase(color)}: ${capitalize(color)} Gate (${colorJP(color)})
+                        
+                    </label>
+                    <img class="gate-icon"
+                             src="https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@master/icon/UI_KLD_AreaIcon_0${getPhase(color)}.png"
+                             alt="${capitalize(color)} Gate Icon">
                     <span class="tooltip">${getTip(color)}</span>
-                    <!-- icon for each gate -->
-                    <img src="https://example.com/${color}.png" alt="${capitalize(color)} Gate Icon" style="width: 20px; height: 20px; margin-left: 5px;">
                 </div>
             `).join('')}
         </div>
