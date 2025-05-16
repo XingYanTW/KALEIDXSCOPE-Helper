@@ -12,7 +12,7 @@
 2. Name the bookmark as you like  
 3. Edit the bookmark URL to:
    ```
-   javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@master/main.js';s.crossOrigin='anonymous';document.body.appendChild(s);})();
+   javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@latest/main.js';s.crossOrigin='anonymous';document.body.appendChild(s);})();
    ```
 4. Open the **Favorite Songs** page on maimai DX and click your bookmark  
 

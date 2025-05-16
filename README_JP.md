@@ -12,7 +12,7 @@
 2. ブックマーク名を任意に設定  
 3. ブックマークの URL を以下に編集  
    ```
-   javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@master/main.js';s.crossOrigin='anonymous';document.body.appendChild(s);})();
+   javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@latest/main.js';s.crossOrigin='anonymous';document.body.appendChild(s);})();
    ```
 4. maimai DX の「お気に入り楽曲」ページを開き、ブックマークをクリック  
 

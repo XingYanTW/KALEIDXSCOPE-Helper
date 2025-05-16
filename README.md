@@ -20,7 +20,7 @@
 2. 將書籤名稱取成想要的名稱
 3. 編輯書籤網址為此代碼
 ```
-javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@master/main.js';s.crossOrigin='anonymous';document.body.appendChild(s);})();
+javascript:(function(){var s=document.createElement('script');s.src='https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@latest/main.js';s.crossOrigin='anonymous';document.body.appendChild(s);})();
 ```
 4. 至net中選擇最愛樂曲介面並點擊書籤
 
