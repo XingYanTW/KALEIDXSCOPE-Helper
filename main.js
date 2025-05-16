@@ -64,7 +64,7 @@
         }
 
         .gate-blue { border-left: 3px solid #3498db; }
-        .gate-white { border-left: 3px solid #ecf0f1; }
+        .gate-white { border-left: 3px solid #D4D299; }
         .gate-violet { border-left: 3px solid #9b59b6; }
         .gate-black { border-left: 3px solid #2c3e50; }
         .gate-yellow { border-left: 3px solid #f1c40f; }
@@ -86,8 +86,110 @@
         .save-button:hover {
             background-color: #1a3a6a;
         }
+
+        .tooltip {
+            position: absolute;
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: none;
+            z-index: 10000;
+        }
+        .gate-checkbox:hover .tooltip {
+            display: block;
+        }
+        .gate-checkbox:hover .tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: transparent transparent #333 transparent;
+        }
+
+        /* animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #kaleidHelper {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        #kaleidHelper h2 {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .gate-section h3 {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .gate-checkbox {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .save-button {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .tooltip {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .tooltip::after {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        /* End of animation */
+        
     `;
     document.head.appendChild(style);
+
+    // Translations
+    const translations = {
+        'en': {
+            'title': 'KALEIDXSCOPE Gate Helper',
+            'selectGates': 'Select Active Gates',
+            'saveButton': 'Save Gate Selection',
+            'gate': 'Gate',
+            'phase': 'Phase',
+            'blue': 'Blue',
+            'white': 'White',
+            'violet': 'Violet',
+            'black': 'Black',
+            'yellow': 'Yellow',
+            'red': 'Red',
+            'saveAlert': 'Gate selection saved!'
+        },
+        'zh-tw': {
+            'title': 'KALEIDXSCOPE 助手',
+            'selectGates': '選擇啟用的門',
+            'saveButton': '儲存選擇',
+            'gate': '',
+            'phase': '階段',
+            'blue': '青春區域',
+            'white': '天界區域',
+            'violet': '黑薔薇區域',
+            'black': '大都會區域',
+            'yellow': '起始區域',
+            'red': '龍區域',
+            'saveAlert': '選擇已儲存！'
+        },
+        'ja': {
+            'title': 'KALEIDXSCOPE ゲートヘルパー',
+            'selectGates': '有効なゲートを選択',
+            'saveButton': 'ゲートの選択を保存',
+            'gate': 'ゲート',
+            'phase': 'フェーズ',
+            'blue': '青',
+            'white': '白',
+            'violet': '紫',
+            'black': '黒',
+            'yellow': '黄',
+            'red': '赤',
+            'saveAlert': 'ゲートの選択を保存しました！'
+        }
+    };
+
+    // Default language
+    let currentLanguage = 'en';
 
     // Helper functions
     function capitalize(str) {
@@ -96,8 +198,8 @@
 
     function colorJP(color) {
         const colors = {
-            blue: '青', white: '白', violet: '紫',
-            black: '黒', yellow: '黄', red: '赤'
+            blue: '青の扉', white: '白の扉', violet: '紫の扉',
+            black: '黒の扉', yellow: '黄の扉', red: '赤の扉'
         };
         return colors[color] || color;
     }
@@ -110,19 +212,79 @@
         return phases[color] || 0;
     }
 
+    function getTip(color) {
+        const lang = currentLanguage;
+        const tips = {
+            'en': {
+                blue: 'Play all 29 songs of the Youth Area (青春エリア) up until スカイストリートちほー6 at least once since the course\'s release',
+                white: 'Equip the Latent Kingdom player frame (purchaseable in the maimile shop in maimai でらっくす PRiSM if not already unlocked through Stamp Cards in maimai でらっくす BUDDiES PLUS), then in one credit, play only the following songs (songs must not be repeated within the credit)',
+                violet: `Set any variant of アウル (Owl) as the tour leader (purchasable in the maimile shop if not already unlocked), then in one credit, only play songs from either season of Kotonoha Project (songs must not be repeated within the credit).\n`,
+                black: 'Play all of past KING of Performai tournaments (International division songs not included) at least once since the course\'s release',
+                yellow: 'Play one of the following version theme songs when it is selected by the random song selection feature',
+                red: 'Play the following 10 songs at least once since the course\'s release'
+            },
+            'zh-tw': {
+                blue: '自挑戰發布以來，至少播放一次青春區域的所有29首歌曲（截至スカイストリートちほー6）',
+                white: '裝備「Latent Kingdom」底板，然後在一次遊戲中，僅播放以下歌曲（歌曲在一次遊戲中不得重複）',
+                violet: `將任何 アウル（貓頭鷹）變體設置為隊長（如果尚未解鎖，可在 maimile 商店購買），然後在一次遊戲中，僅播放言ノ葉計畫任一季的歌曲（歌曲在一次遊戲中不得重複）。\n`,
+                black: '自挑戰發布以來，至少播放一次過去所有 KING of Performai 比賽（不包括國際組歌曲）',
+                yellow: '當隨機歌曲選擇功能選擇時，播放以下版本主題歌曲之一',
+                red: '自課程發布以來，至少播放以下10首歌曲'
+            },
+            'ja': {
+                blue: 'スカイストリートちほー6までの青春エリア内の楽曲を29曲全てプレイすること',
+                white: 'フレーム「Latent Kingdom」をSETし、1クレ中下記の曲中から被らず3、4曲遊ぶ。',
+                violet: `51090942171709440000 となり、この番号をmaimai でらっくすNETのシリアルコードとして入力すると...?`,
+                black: '下記の楽曲11曲を全てプレイすること',
+                yellow: 'ランダム選曲を使用し、下記の楽曲の中からどれか選ばれたら1回でもプレイすること',
+                red: '下記の楽曲10曲を全てプレイすること'
+            }
+        };
+        return tips[lang][color] || tips['en'][color] || '';
+    }
+
+    // Function to update text based on selected language
+    function updateText(lang) {
+        currentLanguage = lang;
+        const translated = translations[lang];
+
+        document.querySelector('#kaleidHelper h2').textContent = translated.title;
+        document.querySelector('#select-gates-header').textContent = translated.selectGates;
+        document.querySelector('#save-gates').textContent = translated.saveButton;
+        // Update the tooltip text
+        document.querySelectorAll('.tooltip').forEach((tooltip, index) => {
+            const color = ['blue', 'white', 'violet', 'black', 'yellow', 'red'][index];
+            tooltip.textContent = getTip(color);
+        });
+
+        ['blue', 'white', 'violet', 'black', 'yellow', 'red'].forEach(color => {
+            const checkbox = document.getElementById(`gate-${color}`);
+            const label = checkbox.nextElementSibling;
+            label.textContent = `${translated.phase} ${getPhase(color)}: ${capitalize(translated[color])} ${translated.gate} (${colorJP(color)})`;
+        });
+    }
+
     // Create the helper window
     console.debug('Creating helper UI window');
     const helperDiv = document.createElement('div');
     helperDiv.id = 'kaleidHelper';
     helperDiv.innerHTML = `
         <h2>KALEIDXSCOPE Gate Helper</h2>
+
+        <label for="language-select">Select Language:</label>
+        <select id="language-select">
+            <option value="en">English</option>
+            <option value="zh-tw">繁體中文</option>
+            <option value="ja">日本語</option>
+        </select>
         
         <div class="gate-section">
-            <h3>Select Active Gates</h3>
+            <h3 id="select-gates-header">Select Active Gates</h3>
             ${['blue', 'white', 'violet', 'black', 'yellow', 'red'].map(color => `
                 <div class="gate-checkbox gate-${color}">
                     <input type="checkbox" id="gate-${color}" name="gate">
                     <label for="gate-${color}">Phase ${getPhase(color)}: ${capitalize(color)} Gate (${colorJP(color)})</label>
+                    <span class="tooltip">${getTip(color)}</span>
                 </div>
             `).join('')}
         </div>
@@ -148,6 +310,19 @@
         }
     });
 
+    // Language selection
+    const languageSelect = document.getElementById('language-select');
+    languageSelect.addEventListener('change', function () {
+        const selectedLanguage = this.value;
+        updateText(selectedLanguage);
+        localStorage.setItem('selectedLanguage', selectedLanguage);
+    });
+
+    // Load saved language
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
+    languageSelect.value = savedLanguage;
+    updateText(savedLanguage);
+
     // Save button functionality
     document.getElementById('save-gates').addEventListener('click', function () {
         console.debug('Save button clicked');
@@ -158,7 +333,7 @@
 
         console.debug('Active gates to save:', activeGates);
         localStorage.setItem('activeGates', JSON.stringify(activeGates));
-        alert('Gate selection saved!');
+        alert(translations[currentLanguage].saveAlert);
 
         filterSongsByGates(activeGates);
     });
