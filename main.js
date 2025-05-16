@@ -8,7 +8,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            width: 280px;
+            width: 320px;
             background-color: #f0f5ff;
             border: 2px solid #4a4a4a;
             border-radius: 8px;
@@ -57,7 +57,6 @@
         .gate-checkbox label {
             font-size: 14px;
             cursor: pointer;
-            display: flex;
             align-items: center;
         }
 
@@ -168,7 +167,7 @@
     // Function to filter songs based on selected gates
     function filterSongsByGates(activeGates) {
         console.log('Filtering songs for gates:', activeGates);
-        
+
         // Phase 1 (Blue Gate) song list
         const phase1Songs = [
             'STEREOSCAPE', 'Crazy Circle', 'シエルブルーマルシェ', 'ブレインジャックシンドローム',
@@ -269,28 +268,35 @@
         ];
 
         // Process each song checkbox
-        document.querySelectorAll('.favorite_checkbox').forEach(checkboxContainer => {
-            const songNameElement = checkboxContainer.querySelector('.favorite_music_name');
-            const songName = songNameElement ? songNameElement.textContent.trim() : '';
-            const checkbox = checkboxContainer.querySelector('input[type="checkbox"][id="favorite"]');
-            
-            if (!checkbox || !songName) return;
+        document.querySelectorAll('.favorite_checkbox').forEach(container => {
+            const songNameElement = container.querySelector('.favorite_music_name');
+            if (!songNameElement) return;
 
-            let shouldCheck = false;
+            const songName = songNameElement.textContent.trim();
+            const checkbox = container.querySelector('input[type="checkbox"][name="music[]"]');
+
+            if (!checkbox) {
+                console.warn('Checkbox not found for song:', songName);
+                return;
+            }
+
+            let shouldShow = false;
 
             // Check which gate's song list contains this song
-            if (activeGates.blue && phase1Songs.includes(songName)) shouldCheck = true;
-            if (activeGates.white && phase2Songs.includes(songName)) shouldCheck = true;
-            if (activeGates.violet && phase3Songs.includes(songName)) shouldCheck = true;
-            if (activeGates.black && phase4Songs.includes(songName)) shouldCheck = true;
-            if (activeGates.yellow && phase5Songs.includes(songName)) shouldCheck = true;
-            if (activeGates.red && phase6Songs.includes(songName)) shouldCheck = true;
+            if (activeGates.blue && phase1Songs.includes(songName)) shouldShow = true;
+            if (activeGates.white && phase2Songs.includes(songName)) shouldShow = true;
+            if (activeGates.violet && phase3Songs.includes(songName)) shouldShow = true;
+            if (activeGates.black && phase4Songs.includes(songName)) shouldShow = true;
+            if (activeGates.yellow && phase5Songs.includes(songName)) shouldShow = true;
+            if (activeGates.red && phase6Songs.includes(songName)) shouldShow = true;
 
-            // Update checkbox state
-            checkbox.checked = shouldCheck;
-            
-            // Show/hide the container based on selection
-            checkboxContainer.style.display = shouldCheck ? '' : 'none';
+            // Update checkbox and visibility
+            if (shouldShow) {
+                checkbox.checked = true;
+                container.style.display = '';
+            } else {
+                container.style.display = 'none';
+            }
         });
     }
 
