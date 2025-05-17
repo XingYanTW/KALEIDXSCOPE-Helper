@@ -510,21 +510,17 @@
 
         // Phase 4 (Black Gate) song list
         const phase4Songs = [
-            'アンビバレンス',
-            '分解収束テイル',
-            'Mystic Parade',
-            '地獄',
-            'ヤミツキ',
-            'ワードワードワード',
-            '届かない花束',
-            'ステップアンドライム',
-            'パーフェクション',
-            'デーモンベット',
-            'ヱデン',
-            'にゃーにゃー冒険譚',
-            'Cry Cry Cry',
-            'シスターシスター',
-            '有明/Ariake'
+            'Blows Up Everything',
+            '≠彡"/了→',
+            'U&iVERSE -銀河鸞翔-',
+            'Rising on the horizon',
+            'KHYMΞXΛ',
+            'Divide et impera!',
+            'Valsqotch',
+            'BREaK! BREaK! BREaK!',
+            'GIGANTØMAKHIA',
+            'ViRTUS',
+            '系ぎて'
         ];
 
         // Phase 5 (Yellow Gate) song list
@@ -565,11 +561,6 @@
 
             const songName = songNameElement.textContent.trim();
             const checkbox = container.querySelector('input[type="checkbox"][name="music[]"]');
-
-            if (!checkbox) {
-                console.warn('Checkbox not found for song:', songName);
-                return;
-            }
 
             let shouldcheck = false;
 
