@@ -31,6 +31,29 @@
             text-align: center;
         }
 
+        /* Language selection */
+        #language-select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 14px;
+            background-color: #fff;
+            color: #333;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        #lauguage-select label {
+            padding-top: 5px;
+        }
+        #language-select option {
+            padding: 8px;
+            background-color: #fff;
+            color: #333;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
         .gate-section {
             margin-bottom: 15px;
         }
@@ -130,26 +153,6 @@
             border-width: 5px;
             border-style: solid;
             border-color: #333 transparent transparent transparent;
-        }
-
-        /* Language select */
-        #language-select {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-        #language-select option {
-            padding: 5px;
-        }
-        #language-select:focus {
-            outline: none;
-            border-color: #3498db;
-        }
-        #language-select:hover {
-            border-color: #3498db;
         }
 
         /* checkbox style */
@@ -432,7 +435,7 @@
         <button id="close-helper" style="position: absolute; top: 5px; right: 5px; background: none; border: none; font-size: 16px; cursor: pointer;">&times;</button>
         <h2>KALEIDXSCOPE Gate Helper</h2>
 
-        <label for="language-select">Select Language:</label>
+        <label id="launguage-select" for="language-select">Select Language:</label>
         <select id="language-select">
             <option value="en">English</option>
             <option value="zh-tw">繁體中文</option>
