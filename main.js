@@ -226,6 +226,44 @@
             margin-top: 5px;
             text-align: center;
         }
+
+        /* close button */
+        #close-helper {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #2a4a7a;
+        }
+        #close-helper:hover {
+            color: #1a3a6a;
+        }
+
+        /* close button animation */
+        @keyframes close-button {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.05); }
+            75% { transform: scale(0.95); }
+            100% { transform: scale(1); }
+        }
+        #close-helper {
+            animation: close-button 0.3s ease-out;
+        }
+        #close-helper:hover {
+            animation: close-button 0.3s ease-out;
+        }
+
+        /* close helper animation popout */
+        @keyframes close-helper {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.95); }
+            75% { transform: scale(1.05); }
+            100% { transform: scale(0); }
+        }
+
     `;
     document.head.appendChild(style);
 
@@ -384,10 +422,14 @@
         });
     }
 
+
     // Create the helper window
     const helperDiv = document.createElement('div');
     helperDiv.id = 'kaleidHelper';
     helperDiv.innerHTML = `
+
+        <!-- a button to close the helper -->
+        <button id="close-helper" style="position: absolute; top: 5px; right: 5px; background: none; border: none; font-size: 16px; cursor: pointer;">&times;</button>
         <h2>KALEIDXSCOPE Gate Helper</h2>
 
         <label for="language-select">Select Language:</label>
@@ -450,6 +492,28 @@
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'en';
     languageSelect.value = savedLanguage;
     updateText(savedLanguage);
+
+    // check if the helper is in favorite page
+    const isFavoritePage = window.location.href.includes('favorite');
+
+    if (!isFavoritePage) {
+        // If not in favorite page, disable the save button
+        const saveButton = document.getElementById('save-gates');
+        saveButton.disabled = true;
+        saveButton.style.backgroundColor = '#ccc';
+        saveButton.style.cursor = 'not-allowed';
+    }
+
+    // Close button functionality
+    document.getElementById('close-helper').addEventListener('click', function () {
+        const helper = document.getElementById('kaleidHelper');
+        if (helper) {
+            helper.style.animation = 'close-helper 0.3s ease-out forwards';
+            setTimeout(() => {
+                helper.remove();
+            }, 300);
+        }
+    });
 
     // Save button functionality
     document.getElementById('save-gates').addEventListener('click', function () {
@@ -605,6 +669,9 @@
 
     // Initial filter if gates are already selected
     if (Object.values(savedGates).some(gate => gate)) {
-        filterSongsByGates(savedGates);
+        // If the user is on the favorite page, filter the songs
+        if (isFavoritePage) {
+            filterSongsByGates(savedGates);
+        }
     }
 })();
