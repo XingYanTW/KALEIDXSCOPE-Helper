@@ -2,7 +2,7 @@
     'use strict';
 
     if (!window.location.href.includes('maimaidx.jp') && !window.location.href.includes('maimaidx-eng.com')) {
-        console.warn('This script is only for maimai NET');
+        alert('This script is only for maimai NET');
         return;
     }
     
