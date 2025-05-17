@@ -1,8 +1,11 @@
 (function () {
     'use strict';
 
-
-    // Add custom CSS
+    if (!window.location.href.includes('maimaidx.jp') && !window.location.href.includes('maimaidx-eng.com')) {
+        console.warn('This script is only for maimai NET');
+        return;
+    }
+    
     const style = document.createElement('style');
     style.textContent = `
         #kaleidHelper {
@@ -39,21 +42,20 @@
             padding-left: 5px;
         }
 
-        /* 讓整個 checkbox 區塊左右配置，並讓 tooltip 正確定位 */
-    .gate-checkbox {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 6px 0;
-        padding: 5px;
-        border-radius: 4px;
-        transition: background-color 0.2s;
-    }
+        .gate-checkbox {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 6px 0;
+            padding: 5px;
+            border-radius: 4px;
+            transition: background-color 0.2s;
+        }
 
-    .gate-checkbox:hover {
-        background-color: #e0e8f0;
-    }
+        .gate-checkbox:hover {
+            background-color: #e0e8f0;
+        }
 
         .gate-checkbox label {
             flex: 1;
@@ -64,7 +66,6 @@
             align-items: center;
         }
 
-        /* 改用 class 取代 id，並靠右顯示 */
         .gate-icon {
             width: 50px;
             height: 50px;
@@ -102,34 +103,34 @@
         }
 
         .tooltip {
-        position: absolute;
-        top: -5px;
-        left: -1%;
-        transform: translateY(-100%);
-        background-color: #333;
-        color: #fff;
-        padding: 5px;
-        border-radius: 4px;
-        font-size: 12px;
-        display: none;
-        z-index: 10000;
-        max-width: 400px;       /* 限制寬度 */
-        white-space: normal;    /* 自動換行 */
-        word-break: break-word; /* 單詞過長時斷行 */
-    }
-    .gate-checkbox:hover .tooltip {
-        display: block;
-    }
-    .gate-checkbox:hover .tooltip::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 50%;
-        transform: translateX(-50%) translateY(100%);
-        border-width: 5px;
-        border-style: solid;
-        border-color: #333 transparent transparent transparent;
-    }
+            position: absolute;
+            top: -5px;
+            left: -1%;
+            transform: translateY(-100%);
+            background-color: #333;
+            color: #fff;
+            padding: 5px;
+            border-radius: 4px;
+            font-size: 12px;
+            display: none;
+            z-index: 10000;
+            max-width: 400px;       /* 限制寬度 */
+            white-space: normal;    /* 自動換行 */
+            word-break: break-word; /* 單詞過長時斷行 */
+        }
+        .gate-checkbox:hover .tooltip {
+            display: block;
+        }
+        .gate-checkbox:hover .tooltip::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%) translateY(100%);
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
 
         /* Language select */
         #language-select {
@@ -183,7 +184,6 @@
             color: #e74c3c;
         }
 
-        
         /* popup animation */
         @keyframes popup {
             0% { transform: scale(0); }
@@ -206,7 +206,6 @@
         .save-button {
             animation: popup 0.3s ease-out;
         }
-        
 
         /* tooltip animation */
         @keyframes tooltip {
@@ -227,11 +226,6 @@
             margin-top: 5px;
             text-align: center;
         }
-        
-        
-
-
-        
     `;
     document.head.appendChild(style);
 
@@ -282,6 +276,23 @@
             'saveAlert': 'ゲートの選択を保存しました！',
             'hover': 'ゲート名にカーソルを合わせてヒントを表示'
         }
+        /*
+        'ko': {
+            'title': '',
+            'selectGates': '',
+            'saveButton': '',
+            'gate': '',
+            'phase': '',
+            'blue': '',
+            'white': '',
+            'violet': '',
+            'black': '',
+            'yellow': '',
+            'red': '',
+            'saveAlert': '',
+            'hover': ''
+        }
+        */
     };
 
     // Default language
@@ -335,6 +346,16 @@
                 yellow: 'ランダム選曲を使用し、下記の楽曲の中からどれか選ばれたら1回でもプレイすること',
                 red: '下記の楽曲10曲を全てプレイすること'
             }
+            /*
+            'ko': {
+                blue: '',
+                white: '',
+                violet: '',
+                black: '',
+                yellow: '',
+                red: ''
+            }
+            */
         };
         return tips[lang][color] || tips['en'][color] || '';
     }
@@ -374,6 +395,8 @@
             <option value="en">English</option>
             <option value="zh-tw">繁體中文</option>
             <option value="ja">日本語</option>
+            <!-- Maybe korean in the future -->
+            <!-- <option value="ko">한국어</option> -->
         </select>
         <p id="hover-tip" >${translations[currentLanguage].hover}</p>
         
