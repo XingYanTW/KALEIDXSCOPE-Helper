@@ -1,7 +1,7 @@
 # KALEIDXSCOPE-Helper
 [[日本語]](https://github.com/XingYanTW/KALEIDXSCOPE-Helper/blob/main/README_JP.md) [[繁體中文]](https://github.com/XingYanTW/KALEIDXSCOPE-Helper/blob/main/README.md)
 
-![UI]()
+![UI](https://raw.githubusercontent.com/XingYanTW/KALEIDXSCOPE-Helper/refs/heads/main/docs/UI_EN.png)
 
 ### Features
 - Displays a **KALEIDXSCOPE Gate Helper** panel at the top-right of the page  

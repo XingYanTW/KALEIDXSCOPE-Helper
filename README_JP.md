@@ -1,6 +1,8 @@
 # KALEIDXSCOPE-Helper
 [[繁體中文]](https://github.com/XingYanTW/KALEIDXSCOPE-Helper/blob/main/README.md) [[English]](https://github.com/XingYanTW/KALEIDXSCOPE-Helper/blob/main/README_EN.md)
 
+![UI](https://raw.githubusercontent.com/XingYanTW/KALEIDXSCOPE-Helper/refs/heads/main/docs/UI_JP.png)
+
 ### 機能
 - ページ右上に **KALEIDXSCOPE Gate Helper** パネルを表示  
 - **英語**、**繁體中文**、**日本語** の多言語対応  

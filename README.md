@@ -1,7 +1,8 @@
 # KALEIDXSCOPE-Helper
 [[日本語]](https://github.com/XingYanTW/KALEIDXSCOPE-Helper/blob/main/README_JP.md) [[English]](https://github.com/XingYanTW/KALEIDXSCOPE-Helper/blob/main/README_EN.md)
 
-一個瀏覽器側載腳本／書籤工具，用來自動勾選 maimai DX「收藏歌曲」頁面中，對應各階段的歌曲。
+![UI](https://raw.githubusercontent.com/XingYanTW/KALEIDXSCOPE-Helper/refs/heads/main/docs/UI_ZH_TW.png)
+
 
 ---
 
