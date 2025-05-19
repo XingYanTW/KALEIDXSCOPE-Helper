@@ -1,0 +1,17 @@
+name: Purge jsDelivr Cache
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main  # or your branch name
+
+jobs:
+  purge-jsdelivr-cache:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Purge jsDelivr Cache
+        uses: gacts/purge-jsdelivr-cache@v1
+        with:
+          url: |
+            https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@latest/main.js
