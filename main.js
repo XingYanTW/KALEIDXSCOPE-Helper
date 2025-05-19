@@ -455,7 +455,7 @@
                         
                     </label>
                     <img class="gate-icon"
-                             src="https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@master/icon/UI_KLD_AreaIcon_0${getPhase(color)}.png"
+                             src="https://cdn.jsdelivr.net/gh/XingYanTW/KALEIDXSCOPE-Helper@latest/icon/UI_KLD_AreaIcon_0${getPhase(color)}.png"
                              alt="${capitalize(color)} Gate Icon">
                     <span class="tooltip">${getTip(color)}</span>
                 </div>
